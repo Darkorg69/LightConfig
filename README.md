@@ -1,6 +1,6 @@
-<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/Cs0WMCmM/light-config.png"></p>
+<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/Cs0WMCmM/light-config.png" alt="Light Config Banner"></p>
 
-<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png"></p>
+<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png" alt=""></p>
 
 # Light Config
 
@@ -12,7 +12,7 @@ Light Config is a library, not a gameplay mod, it does nothing on its own.
 
 I built it as a shared code library for my mods, but I decided to share it so other developers can use it too.
 
-<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png"></p>
+<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png" alt="Line"></p>
 
 ## 📘 Features
 
@@ -21,7 +21,7 @@ I built it as a shared code library for my mods, but I decided to share it so ot
 - 🧩 **Multiloader oriented** — write your code once in common and use it on all modloaders.
 - 📦 **Modpack friendly** — every config lives in a folder named after the owning mod ID, so multiple mods can safely use the same file names.
 
-<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png"></p>
+<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png" alt="Line"></p>
 
 ## 💡 FAQ's
 
@@ -31,7 +31,7 @@ I built it as a shared code library for my mods, but I decided to share it so ot
 **Q:** Can I include this mod in my modpack?  
 **A:** Yes!
 
-<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png"></p>
+<p><img style="width: 100%; height: 100%;" src="https://i.ibb.co/q9ZCqmY/line.png" alt="Line"></p>
 
 ## 🧑‍💻 Information for Mod Developers
 
