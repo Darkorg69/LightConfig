@@ -1,0 +1,21 @@
+# Compiled output
+build/
+.gradle/
+out/
+
+# IDE
+/.idea/
+/.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.tmp
+run/
+/AGENTS.md

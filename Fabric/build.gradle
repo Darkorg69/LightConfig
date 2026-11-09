@@ -1,0 +1,114 @@
+plugins {
+    id 'fabric-loom' version '1.19-SNAPSHOT'
+}
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}-fabric"
+}
+
+repositories {
+    maven { url = "https://maven.terraformersmc.com/releases/" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
+    }
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    implementation "com.electronwill.night-config:toml:3.6.4"
+    include "com.electronwill.night-config:toml:3.6.4"
+    include "com.electronwill.night-config:core:3.6.4"
+
+    modApi("com.terraformersmc:modmenu:7.2.2") {
+        exclude(module: "fabric-api")
+    }
+}
+
+loom {
+    runs {
+        client {
+            client()
+            getDisplayName().set("Client")
+            getGenerateRunConfig().set(true);
+            getRunDirectory().set(getProject().file("run"))
+        }
+        server {
+            server()
+            getDisplayName().set("Server")
+            getGenerateRunConfig().set(true);
+            getRunDirectory().set(getProject().file("run"))
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java { srcDir '../Common/src/main/java' }
+        resources { srcDir '../Common/src/main/resources' }
+    }
+}
+
+// The Fabric jar nests NightConfig (jar-in-jar), so it must ship the LGPL-3.0
+// license text and the licensing notice.
+processResources {
+    from(rootProject.file("LICENSE-night-config.md"))
+    from(rootProject.file("LICENSING.md"))
+}
+
+def commonLibs = rootProject.layout.buildDirectory.dir("libs/common")
+def fabricLibs = rootProject.layout.buildDirectory.dir("libs/fabric")
+
+remapJar {
+    destinationDirectory.set(fabricLibs)
+}
+
+// Fabric sources
+tasks.register('fabricSourcesJar', Jar) {
+    archiveBaseName = "${mod_id}-${minecraft_version}-fabric"
+    archiveClassifier = 'sources'
+    destinationDirectory.set(fabricLibs)
+    from sourceSets.main.allSource
+}
+
+// Common artifacts (normal + sources)
+tasks.register('commonJar', Jar) {
+    archiveBaseName = "${mod_id}-${minecraft_version}-common"
+    destinationDirectory.set(commonLibs)
+    from(sourceSets.main.output) {
+        include 'darkorg/lightconfig/common/**'
+    }
+}
+tasks.register('commonSourcesJar', Jar) {
+    archiveBaseName = "${mod_id}-${minecraft_version}-common"
+    archiveClassifier = 'sources'
+    destinationDirectory.set(commonLibs)
+    from fileTree('../Common/src/main/java')
+}
+
+tasks.named('assemble') {
+    dependsOn 'fabricSourcesJar'
+    dependsOn 'commonJar', 'commonSourcesJar'
+}
+
+publishing {
+    publications {
+        common(MavenPublication) {
+            groupId = 'com.github.darkorg69.lightconfig'
+            artifactId = 'lightconfig-common'
+            artifact tasks.named('commonJar')
+            artifact tasks.named('commonSourcesJar')
+        }
+        fabric(MavenPublication) {
+            groupId = 'com.github.darkorg69.lightconfig'
+            artifactId = 'lightconfig-fabric'
+            artifact tasks.named('remapJar')
+            artifact tasks.named('fabricSourcesJar')
+        }
+    }
+}

@@ -1,0 +1,15 @@
+// Common is intentionally NOT a Gradle subproject (see settings.gradle).
+//
+// It is a source-only module. Its sources are compiled directly into the loaders:
+//   - Fabric: added as a source dir in Fabric/build.gradle (`sourceSets.main`)
+//   - Forge:  added via the compileJava/sourcesJar/processResources `source`/`from`
+//
+// This keeps Common free of any Minecraft plugin (which is what previously
+// collided with ModDevGradle's idea-ext during IntelliJ sync). This file is only
+// applied if someone re-adds ":Common" to settings.gradle.
+plugins {
+    id 'java'
+}
+
+tasks.named('compileJava') { enabled = false }
+tasks.named('jar') { enabled = false }
